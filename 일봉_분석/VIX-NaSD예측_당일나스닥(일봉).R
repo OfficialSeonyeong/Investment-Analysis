@@ -26,19 +26,16 @@ merge <- merge(V, N_n, by='일자 / 시간')
 View(merge)
 head(merge)
 
-proj01 <- merge %>% select('종가','변동폭')
-head(proj01)
-View(proj01)
 
 # 상관 관계 분석
-cor(proj01)
-cor.test(proj01$종가, proj01$변동폭) 
+cor(merge$종가, merge$변동폭)
+cor.test(merge$종가, merge$변동폭) 
 #p-value < 0.5(유의수준) 이므로 두 변수는 상관관계를 가짐.
 
 
 
 # 회귀 분석
-m1 <- lm(변동폭~종가, proj01)
+m1 <- lm(변동폭~종가, merge)
 
 # y=11.33x-60.57
 
@@ -47,9 +44,9 @@ summary(m1)
 # 결정계수(R-squared)=0.5711로, 회귀식이 데이터를 적절하게 설명하고 있다고 볼 수 없다.
 
 
-plot(변동폭 ~ 종가, data= proj01)
-abline( h = mean(proj01$변동폭), lty=2, col = 'blue')
-abline( v = mean(proj01$종가), lty=2, col = 'blue')
+plot(변동폭 ~ 종가, data= merge)
+abline( h = mean(merge$변동폭), lty=2, col = 'blue')
+abline( v = mean(merge$종가), lty=2, col = 'blue')
 abline( m1, lty=2, col='red')
 
 # 특정값 x의 y 예측
@@ -59,12 +56,12 @@ predict(m1, newdata = data.frame(종가 = 4))
 
 # 예측값 다뤄보기
 preidct <- fitted(m1)
-pre_merge <- cbind(proj01,preidct)
+pre_merge <- cbind(merge,preidct)
 View(pre_merge)
-colnames(pre_merge)[3] <- '예측값'
+colnames(pre_merge)[4] <- '예측값'
 str(pre_merge)
 pre_merge$차이 <-abs(pre_merge$'변동폭' - pre_merge$'예측값')
-max(pre_merge$차이)
+
 
 # 엑셀 파일로 저장
 install.packages("writexl")
