@@ -73,3 +73,13 @@ max(pre_merge$차이)
 install.packages("writexl")
 library(writexl)
 write_xlsx(pre_merge,path = "/Users/A/Desktop/일봉예측값_익일나스닥2020.xlsx")
+
+-------------------------------------------------
+# 비선형 회귀 분석
+a = merge_new$종가
+b = merge_new$종가^2
+m2 <- lm(merge_new$변동폭~a+b)
+# y= 0.07229x^2+4.80806x+67.18712
+
+summary(m2)
+# R-squared: 0.3842

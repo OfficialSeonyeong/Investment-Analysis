@@ -65,6 +65,7 @@ str(pre_merge)
 pre_merge$차이 <-abs(pre_merge$'변동폭' - pre_merge$'예측값')
 max(pre_merge$차이)
 
+
 # 엑셀 파일로 저장
 install.packages("writexl")
 library(writexl)
